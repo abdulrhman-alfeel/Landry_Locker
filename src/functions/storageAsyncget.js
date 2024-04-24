@@ -2,7 +2,7 @@ import React from 'react';
 import {getArray, setLanguage} from '../redux/action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-import Text_Arabic from '../data/Data_Text_Arabic';
+import Text_Arabic from '../data/dataTextArabic';
 
 export default function usestorageGet() {
   const dispatch = useDispatch();

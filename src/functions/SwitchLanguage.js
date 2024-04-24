@@ -1,13 +1,13 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import {useState} from 'react';
-import Text_Arabic from '../data/Data_Text_Arabic';
-import Text_English from '../data/Data_Text_English';
+import Text_Arabic from '../data/dataTextArabic';
+import Text_English from '../data/dataTextEnglish';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {useEffect} from 'react';
-import additionlArabic from '../data/additionl_Arabic';
-import additionlEnglish from '../data/additionl_English';
+import additionlArabic from '../data/additionlArabic';
+import additionlEnglish from '../data/additionlEnglish';
 import {
   setLanguage,
   setLanguageSign,

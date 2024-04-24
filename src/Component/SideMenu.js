@@ -16,6 +16,7 @@ import {colors} from '../constants/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {fonts} from '../constants/fonts';
 import {useSelector} from 'react-redux';
+import useEnquryLanguag from '../functions/EnquryLanguag';
 const SideMenu: React.FC<ListItemProps> = ({
   items,
   touch,
@@ -30,6 +31,7 @@ const SideMenu: React.FC<ListItemProps> = ({
   const {Language, darkmode, Languagesign} = useSelector(
     state => state.userReducer,
   );
+  const {flexS, rowS, Leftn, rowSexpception} = useEnquryLanguag();
 
   const handleDrowng = () => {
     console.log(Languagesign === 'en', translationX < 0);
@@ -62,7 +64,7 @@ const SideMenu: React.FC<ListItemProps> = ({
   const style_font = {
     fontFamily: fonts.TAJAWALEXTRABOLD,
     fontSize: 15,
-    textAlign: Languagesign === 'en' ? 'right' : 'left',
+    // textAlign: Languagesign === 'en' ? 'right' : 'left',
     color: darkmode === 'light' ? colors.BLACK : colors.WHITE,
   };
 
@@ -73,7 +75,7 @@ const SideMenu: React.FC<ListItemProps> = ({
       <TouchableOpacity
         style={{
           zIndex: 1,
-          alignItems: Languagesign === 'ar' ? 'flex-end' : 'flex-start',
+          alignItems: flexS(),
         }}
         onLongPress={handleDrowng}
         //  onPress={translationX < 0 ? handleDrowng: null}
@@ -88,13 +90,13 @@ const SideMenu: React.FC<ListItemProps> = ({
             {
               backgroundColor:
                 darkmode === 'light' ? colors.WHITE : colors.DARKM,
-              flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row',
+              flexDirection: rowS(),
             },
           ]}>
           <View
             style={{
               flex: 3,
-              flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row',
+              flexDirection: rowS(),
             }}>
             <View>
               <Text style={[style_font, {fontSize: 13}]}>{items.name}</Text>
@@ -112,7 +114,7 @@ const SideMenu: React.FC<ListItemProps> = ({
             <View
               style={{
                 flex: 1,
-                flexDirection:Languagesign === 'en' ? 'row-reverse':'row',
+                flexDirection: rowS(),
                 justifyContent: 'space-around',
                 alignItems: 'center',
               }}>
@@ -159,6 +161,8 @@ const SideMenu: React.FC<ListItemProps> = ({
                   : translationX === 70 && Languagesign === 'ar'
                   ? 'flex'
                   : 'none',
+              alignItems: 'center',
+              alignSelf: Leftn(),
             },
           ]}>
           <FontAwesome5 name="trash" size={40} color={colors.PREMREYON} />
@@ -190,7 +194,6 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
     backgroundColor: colors.BLACK,
-    alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 0,

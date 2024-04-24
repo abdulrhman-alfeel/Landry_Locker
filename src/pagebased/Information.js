@@ -5,8 +5,11 @@ import {useSelector} from 'react-redux';
 import useSwitchLanguage from '../functions/SwitchLanguage';
 import {fonts} from '../constants/fonts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import useEnquryLanguag from '../functions/EnquryLanguag';
 
 export default function Information() {
+  const {flexS, rowS} = useEnquryLanguag();
+
   const {Language, Languagesign, darkmode} = useSelector(
     state => state.userReducer,
   );
@@ -21,7 +24,7 @@ export default function Information() {
     marginHorizontal: 10,
     borderRadius: 10,
     padding: 5,
-    elevation:1,
+    elevation: 1,
     backgroundColor: darkmode === 'light' ? colors.WHITE : colors.DARK,
     borderWidth: 1,
     borderColor: colors.WHITE,
@@ -49,7 +52,6 @@ export default function Information() {
   return (
     <View
       style={{
-        
         backgroundColor: darkmode === 'light' ? colors.ASHEN : colors.DARK,
         height: '100%',
       }}>
@@ -59,18 +61,14 @@ export default function Information() {
           <Text style={[style_font, {fontSize: 20}]}>{Language.settings}</Text>
         </View>
         {/* data user */}
-        <View
-          style={[
-            style_continer,
-            {flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row'},
-          ]}>
+        <View style={[style_continer, {flexDirection: rowS()}]}>
           <View
             style={{
               height: 80,
               width: 80,
               borderRadius: 100,
               backgroundColor: colors.ASHEN,
-              alignSelf: Languagesign === 'ar' ? 'flex-end' : 'flex-start',
+              alignSelf: flexS(),
               margin: 10,
               justifyContent: 'center',
               alignItems: 'center',

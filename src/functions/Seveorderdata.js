@@ -2,8 +2,8 @@ import {View, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Tostget} from '../massg';
 import uuid from 'react-native-uuid';
-import usestorageGet from './storageAsyncget';
-import usestorageAsync from './storageAsync';
+import usestorageGet from './StorageAsyncget';
+import usestorageAsync from './StorageAsync';
 import {useDispatch, useSelector} from 'react-redux';
 const arrapython = [];
 

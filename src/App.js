@@ -7,8 +7,8 @@ import {Store} from './redux/store';
 import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import {NavigationContainer} from '@react-navigation/native';
-import Home from './Home';
-import Order_details from './pagebased/Order_details';
+import Home from './HomeMain';
+import Order_details from './pagebased/Orderdetails';
 import {useEffect} from 'react';
 import useSwitchLanguage from './functions/SwitchLanguage';
 

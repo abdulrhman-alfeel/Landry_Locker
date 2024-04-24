@@ -3,8 +3,11 @@ import React from 'react';
 import {fonts} from '../constants/fonts';
 import {colors} from '../constants/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import useEnquryLanguag from '../functions/EnquryLanguag';
 
-export default function OrderList({item, language,languagesign}) {
+export default function OrderList({item, language, languagesign}) {
+  const {flexS, rowS, iconName, rowSexpception} = useEnquryLanguag();
+
   const style_font = {
     fontFamily: fonts.TAJAWALEXTRABOLD,
     fontSize: 25,
@@ -16,12 +19,12 @@ export default function OrderList({item, language,languagesign}) {
       style={{
         // opacity:0.2,
         // flex:1,
-        flexDirection: 'row',
+        flexDirection: rowS(),
         justifyContent: 'space-around',
         alignItems: 'center',
         borderBottomWidth: 0.2,
         marginVertical: 1,
-        padding:2
+        padding: 2,
         // borderRadius: 15,
       }}>
       <View
@@ -32,11 +35,14 @@ export default function OrderList({item, language,languagesign}) {
             marginLeft: 0,
             padding: 0,
             paddingVertical: 15,
-            flexDirection:languagesign === 'en'? 'row-reverse':'row',
+            flexDirection: rowS(),
             justifyContent: 'space-around',
           },
         ]}>
-        <View style={{flexDirection: languagesign === 'en'? 'row-reverse':'row'}}>
+        <View
+          style={{
+            flexDirection: rowS(),
+          }}>
           <View
             style={{
               borderRadius: 100,

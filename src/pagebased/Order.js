@@ -10,13 +10,14 @@ import React, {useState} from 'react';
 import {colors} from '../constants/colors';
 import {fonts} from '../constants/fonts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import useCollectOrderData from '../functions/collect_order_data';
-import useSeve_order_data from '../functions/Seve_order_data.js';
+import useCollectOrderData from '../functions/Collectorderdata.js';
+import useSeve_order_data from '../functions/Seveorderdata.js';
 import {isEmpty} from 'lodash';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import {setArrayOrder} from '../redux/action';
-import additionlArabic from '../data/additionl_Arabic';
+import additionlArabic from '../data/additionlArabic.js';
+import useEnquryLanguag from '../functions/EnquryLanguag.js';
 export default function Order({navigation}) {
   const {Language, arrayOrder, darkmode, Languagesign} = useSelector(
     state => state.userReducer,
@@ -26,6 +27,8 @@ export default function Order({navigation}) {
   const [Operation, setOperation] = useState('washANDIron');
   const {getOrderData, Collect, emptys} = useCollectOrderData();
   const {saveData} = useSeve_order_data({navigation});
+  const {rowS, iconName, rowSexpception} = useEnquryLanguag();
+
   useEffect(() => {
     dispatch(setArrayOrder(additionlArabic));
   }, []);
@@ -40,7 +43,7 @@ export default function Order({navigation}) {
   const style_font = {
     fontFamily: fonts.TAJAWALEXTRABOLD,
     fontSize: 15,
-    textAlign: Languagesign === 'en' ? 'right' : 'left',
+    // textAlign: Languagesign === 'en' ? 'right' : 'left',
     color: darkmode === 'light' ? colors.BLACK : colors.WHITE,
   };
   return (
@@ -53,7 +56,7 @@ export default function Order({navigation}) {
         style={{
           flex: 1,
           padding: 10,
-          flexDirection: Languagesign === 'en' ? 'row' : 'row-reverse',
+          flexDirection: rowSexpception(),
           justifyContent: 'space-around',
           alignItems: 'center',
           backgroundColor: darkmode === 'light' ? colors.WHITE : colors.DARKM,
@@ -66,11 +69,7 @@ export default function Order({navigation}) {
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('home')}>
           <FontAwesome5
-            name={
-              Languagesign === 'en'
-                ? 'arrow-alt-circle-left'
-                : 'arrow-alt-circle-right'
-            }
+            name={iconName()}
             size={39}
             color={darkmode === 'dark' ? colors.WHITE : colors.PREMREYON}
           />
@@ -88,14 +87,14 @@ export default function Order({navigation}) {
               {
                 marginTop: 10,
                 marginHorizontal: 15,
-                textAlign: Languagesign === 'ar' ? 'left' : 'right',
+                // textAlign: Languagesign === 'ar' ? 'left' : 'right',
               },
             ]}>
             {Language.addDetails}
           </Text>
           <View
             style={{
-              flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row',
+              flexDirection: rowS(),
               marginVertical: 10,
             }}>
             <Pressable
@@ -176,16 +175,14 @@ export default function Order({navigation}) {
                       padding: 0,
                       paddingVertical: 15,
                       paddingHorizontal: 15,
-                      flexDirection:
-                        Languagesign === 'ar' ? 'row' : 'row-reverse',
+                      flexDirection: rowS(),
                       justifyContent: 'space-around',
                     },
                   ]}>
                   <View
                     style={{
                       flex: 2,
-                      flexDirection:
-                        Languagesign === 'ar' ? 'row' : 'row-reverse',
+                      flexDirection: rowS(),
                     }}>
                     <View
                       style={{
@@ -239,7 +236,7 @@ export default function Order({navigation}) {
                     <View
                       style={{
                         flex: 1,
-                        flexDirection: 'row-reverse',
+                        flexDirection: rowS(),
                         justifyContent: 'space-around',
                         alignItems: 'center',
                       }}>
@@ -304,7 +301,7 @@ export default function Order({navigation}) {
           flex: 2,
           justifyContent: 'space-around',
           alignItems: 'center',
-          flexDirection: Languagesign === 'ar' ? 'row' : 'row-reverse',
+          flexDirection: rowS(),
           backgroundColor: darkmode === 'light' ? colors.WHITE : colors.DARKM,
           borderTopEndRadius: 50,
           borderTopStartRadius: 50,

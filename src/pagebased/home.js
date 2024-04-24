@@ -11,21 +11,23 @@ import {
 import {fonts} from '../constants/fonts';
 import {colors} from '../constants/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import usestorageGet from '../functions/storageAsyncget';
+import usestorageGet from '../functions/StorageAsyncget';
 import {useSelector} from 'react-redux';
 import Advertis from '../Component/Advertis';
 import OrderList from '../Component/OrderList';
 import useSwitchLanguage from '../functions/SwitchLanguage';
 import {Tostget} from '../massg';
+import useEnquryLanguag from '../functions/EnquryLanguag';
 export default function Home_sub({navigation}) {
   const {arrayIron, Language, darkmode, Languagesign} = useSelector(
     state => state.userReducer,
   );
+  const {flexS, rowS, languageLocal, Leftn} = useEnquryLanguag();
   const [switchArray, setSwitch] = useState(arrayIron?.slice(0, 2));
 
   const getItemsStroge = usestorageGet();
   const [moreData, setMore] = useState(false);
-
+  const localLanguage = languageLocal();
   const style_font = {
     fontFamily: fonts.TAJAWALEXTRABOLD,
     fontSize: 25,
@@ -38,7 +40,7 @@ export default function Home_sub({navigation}) {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: rowS(),
     // gap:15
   };
 
@@ -50,7 +52,7 @@ export default function Home_sub({navigation}) {
     padding: 7,
     borderRadius: 10,
     marginLeft: 10,
-    flexDirection: 'row-reverse',
+    flexDirection: rowS(),
     justifyContent: 'space-around',
     alignItems: 'center',
   };
@@ -60,7 +62,8 @@ export default function Home_sub({navigation}) {
     padding: 5,
     borderRadius: 10,
   };
-  let num = 0;
+  // let num = 'ar_am';
+  // num.startsWith
   useEffect(() => {
     getItemsStroge('Iron');
     // SW();
@@ -75,13 +78,17 @@ export default function Home_sub({navigation}) {
       }}>
       <View
         style={{
-          alignSelf: Languagesign === 'en' ? 'flex-start' : 'flex-end',
           marginHorizontal: 30,
           marginVertical: 10,
+          width: '20%',
           top: 20,
+          alignSelf: Leftn(),
         }}>
         <Pressable
-          android_ripple={{borderless: 10}}
+          android_ripple={{
+            borderless: true,
+            color: colors.PREMREYON,
+          }}
           hitSlop={20}
           onPress={() => {
             Tostget(Language.notifications);
@@ -106,7 +113,9 @@ export default function Home_sub({navigation}) {
               width: '90%',
               justifyContent: 'center',
               alignItems: 'center',
-              flexDirection: 'row-reverse',
+              flexDirection: localLanguage.startsWith('ar')
+                ? 'row-reverse'
+                : 'row',
             }}>
             <Image
               style={{
@@ -132,7 +141,8 @@ export default function Home_sub({navigation}) {
               {
                 width: '100%',
                 flexDirection: 'column',
-                alignItems: Languagesign === 'en' ? 'flex-end' : 'flex-start',
+                alignItems: flexS(),
+                // alignItems: 'flex-start',
               },
             ]}>
             <Text style={[style_font, {fontSize: 12}]}>
@@ -151,7 +161,7 @@ export default function Home_sub({navigation}) {
             {
               flex: 1,
               flexDirection: 'column',
-              alignItems: Languagesign === 'en' ? 'flex-end' : 'flex-start',
+              alignItems: flexS(),
             },
           ]}>
           <Text style={[style_font, {fontSize: 15, marginVertical: 10}]}>
@@ -162,7 +172,7 @@ export default function Home_sub({navigation}) {
             style={{
               // opacity:0.2,
               // flex:1,
-              flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row',
+              flexDirection: rowS(),
               justifyContent: 'space-around',
               alignItems: 'center',
               // paddingVertical:10,
@@ -223,7 +233,7 @@ export default function Home_sub({navigation}) {
           <View
             style={{
               width: '100%',
-              flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row',
+              flexDirection: rowS(),
               justifyContent: 'space-between',
               marginVertical: 10,
             }}>
@@ -267,7 +277,7 @@ export default function Home_sub({navigation}) {
                 }}
               />
               <Text style={[style_font, {fontSize: 15, margin: 10}]}>
-                لايوجد طلبات حالياً
+                {Language.requests}
               </Text>
             </View>
           ) : (

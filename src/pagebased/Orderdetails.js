@@ -7,18 +7,20 @@ import {
   ScrollView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {colors} from '../constants/colors';
-import {fonts} from '../constants/fonts';
+import {colors} from '../constants/colors.js';
+import {fonts} from '../constants/fonts.js';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import additionl from '../data/additionl_Arabic.js';
-import SideMenu from '../Component/SideMenu';
-import useCollectOrderDatiels from '../functions/collect_order_datiels';
-import useSeve_order_data from '../functions/Seve_order_data.js';
+import additionl from '../data/additionlArabic.js';
+import SideMenu from '../Component/SideMenu.js';
+import useCollectOrderDatiels from '../functions/Collectorderdatiels.js';
+import useSeve_order_data from '../functions/Seveorderdata.js';
 import {useSelector} from 'react-redux';
+import useEnquryLanguag from '../functions/EnquryLanguag.js';
 export default function Order_details({route, navigation}) {
   const {Language, darkmode, Languagesign} = useSelector(
     state => state.userReducer,
   );
+  const {flexS, rowS, iconName, rowSexpception} = useEnquryLanguag();
 
   const {Data} = route.params;
   const [washing, setWashing] = useState([]);
@@ -31,7 +33,7 @@ export default function Order_details({route, navigation}) {
   const style_font = {
     fontFamily: fonts.TAJAWALEXTRABOLD,
     fontSize: 15,
-    textAlign: Languagesign === 'en' ? 'right' : 'left',
+    // textAlign: Leftn(),
     color: darkmode === 'light' ? colors.BLACK : colors.WHITE,
   };
   const style_font_heder = {
@@ -44,9 +46,9 @@ export default function Order_details({route, navigation}) {
   };
   const style_Taching = {
     flex: 2,
-    height: '50%',
-    marginHorizontal: 25,
-    padding: 10,
+    height: '40%',
+    marginHorizontal: 5,
+    padding: 5,
     borderRadius: 5,
     alignItems: 'center',
   };
@@ -68,7 +70,7 @@ export default function Order_details({route, navigation}) {
         style={{
           flex: 1,
           padding: 10,
-          flexDirection: Languagesign === 'ar' ? 'row-reverse' : 'row',
+          flexDirection: rowSexpception(),
           justifyContent: 'space-around',
           alignItems: 'center',
           backgroundColor:
@@ -95,7 +97,7 @@ export default function Order_details({route, navigation}) {
         </Text>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <FontAwesome5
-            name="arrow-alt-circle-right"
+            name={iconName()}
             size={39}
             color={darkmode === 'light' ? colors.PREMREYON : colors.WHITE}
           />
@@ -113,7 +115,7 @@ export default function Order_details({route, navigation}) {
           <View
             style={{
               display: Data.arr[0].length > 0 ? 'flex' : 'none',
-              flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row',
+              flexDirection: rowS(),
               justifyContent: 'space-between',
               marginVertical: 15,
             }}>
@@ -142,7 +144,7 @@ export default function Order_details({route, navigation}) {
             <View
               style={{
                 display: Data.arr[1].length > 0 ? 'flex' : 'none',
-                flexDirection: 'row-reverse',
+                flexDirection: rowS(),
                 justifyContent: 'space-between',
                 marginVertical: 15,
               }}>
@@ -188,7 +190,7 @@ export default function Order_details({route, navigation}) {
             width: '85%',
             flex: 1.5,
             alignItems: 'center',
-            flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row',
+            flexDirection: rowS(),
             justifyContent: 'space-between',
           }}>
           <View>
@@ -218,7 +220,7 @@ export default function Order_details({route, navigation}) {
             {
               fontSize: 12,
               color: darkmode === 'light' ? colors.CURRENT : colors.WHITE,
-              alignSelf: Languagesign === 'en' ? 'flex-end' : 'flex-start',
+              alignSelf: flexS(),
               marginHorizontal: 25,
             },
           ]}>
@@ -227,7 +229,7 @@ export default function Order_details({route, navigation}) {
         <View
           style={{
             flex: 1,
-            flexDirection: Languagesign === 'en' ? 'row-reverse' : 'row',
+            flexDirection: rowS(),
           }}>
           <TouchableOpacity
             onPress={() => {

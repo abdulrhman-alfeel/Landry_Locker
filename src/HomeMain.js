@@ -3,39 +3,27 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 // import {setIDEMPLOY} from './redux/action';
 import {colors} from './constants/colors.js';
-import usestorageGet from './functions/storageAsyncget';
+import usestorageGet from './functions/StorageAsyncget.js';
 // import uuid from 'react-native-uuid';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import PagerView from 'react-native-pager-view';
-import Home_sub from './pagebased/home.js';
+import Home_sub from './pagebased/Home.js';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Order from './pagebased/Order.js';
 import Information from './pagebased/Information.js';
 import {fonts} from './constants/fonts.js';
 import useSwitchLanguage from './functions/SwitchLanguage.js';
+import useEnquryLanguag from './functions/EnquryLanguag.js';
 
 const Tab = createBottomTabNavigator();
 export default function Home({navigation}) {
   const {Language, darkmode, Languagesign} = useSelector(
     state => state.userReducer,
   );
+  const {homePage, informationPage, languageLocal} = useEnquryLanguag();
   useSwitchLanguage();
-  const SwitchingLeft = route => {
-    return Languagesign === 'ar'
-      ? route.name !== 'information' && route.name !== 'order'
-        ? 50
-        : 0
-      : 0;
-  };
-  const SwitchingRight = route => {
-    return Languagesign === 'ar'
-      ? route.name !== 'information' ||
-        route.name === 'order' ||
-        route.name === 'home'
-        ? 0
-        : 50
-      : 0;
-  };
+
+
   return (
     <>
       <PagerView style={{flex: 2}}>
@@ -54,10 +42,8 @@ export default function Home({navigation}) {
               // backgroundColor:'#000'
             },
             tabBarItemStyle: {
-              borderTopLeftRadius: SwitchingLeft(route),
-
-              borderTopRightRadius: SwitchingRight(route),
-
+              // borderTopLeftRadius: SwitchingLeft(route),
+              // borderTopRightRadius: SwitchingRight(route),
               minWidth: 20,
               minHeight: 100,
               top: -50,
@@ -141,11 +127,12 @@ export default function Home({navigation}) {
             // },
           })}>
           <Tab.Screen
-            name={Languagesign === 'en' ? 'information' : 'home'}
-            component={Languagesign === 'en' ? Information : Home_sub}
+            name={homePage()}
+            component={homePage() === 'home' ? Home_sub : Information}
             options={{
               tabBarLabel:
-                Languagesign === 'en' ? Language.information : Language.Home,
+                homePage() === 'home' ? Language.Home : Language.information,
+
               header: () => null,
             }}
           />
@@ -157,13 +144,17 @@ export default function Home({navigation}) {
               header: () => null,
             }}
           />
+
           <Tab.Screen
-            name={Languagesign === 'en' ? 'home' : 'information'}
-            component={Languagesign === 'en' ? Home_sub : Information}
+            name={informationPage()}
+            component={
+              informationPage() === 'information' ? Information : Home_sub
+            }
             options={{
               tabBarLabel:
-                Languagesign === 'en' ? Language.Home : Language.information,
-
+                informationPage() === 'information'
+                  ? Language.information
+                  : Language.Home,
               header: () => null,
             }}
           />
